@@ -69,9 +69,9 @@ function( DeployQt )
 		)
 	elseif( WIN32 )	
 		set( app_name "${name}.exe" )
-		set( app_path "${CMAKE_CURRENT_BINARY_DIR}/${app_name}" )
-		set( temp_dir "${CMAKE_CURRENT_BINARY_DIR}/deployqt" )
-		set( temp_app_path "${temp_dir}/$<CONFIG>" )
+		set( app_path "${CMAKE_CURRENT_BINARY_DIR}/$<CONFIG>/${app_name}" )
+		set( temp_dir "${CMAKE_CURRENT_BINARY_DIR}/$<CONFIG>/deployqt" )
+		set( temp_app_path "${temp_dir}/${app_name}" )
 
 		add_custom_command(
 			TARGET ${DEPLOY_QT_TARGET}
@@ -90,24 +90,24 @@ function( DeployQt )
 	
 		if( NOT CMAKE_CONFIGURATION_TYPES )
 			install(
-				DIRECTORY ${temp_app_path}
+				DIRECTORY ${temp_dir}/
 				DESTINATION ${deploy_path}
 			)
 		else()
 			install(
-				DIRECTORY ${temp_app_path}
+				DIRECTORY ${temp_dir}/
 				CONFIGURATIONS Debug
 				DESTINATION ${deploy_path}_debug
 			)
 		
 			install(
-				DIRECTORY ${temp_app_path}
+				DIRECTORY ${temp_dir}/
 				CONFIGURATIONS Release
 				DESTINATION ${deploy_path}
 			)
 		
 			install(
-				DIRECTORY ${temp_app_path}
+				DIRECTORY ${temp_dir}/
 				CONFIGURATIONS RelWithDebInfo
 				DESTINATION ${deploy_path}_withDebInfo
 			)

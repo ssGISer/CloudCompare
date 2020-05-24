@@ -58,6 +58,14 @@ else()
 	set( CCVIEWER_DEST_FOLDER bin )
 endif()
 
+if( WIN32 )
+    set( INSTALL_DESTINATIONS ${CLOUDCOMPARE_DEST_FOLDER} )
+    
+    if( ${OPTION_BUILD_CCVIEWER} )
+        list( APPEND INSTALL_DESTINATIONS ${CCVIEWER_DEST_FOLDER} )
+	endif()
+endif()
+
 # Load advanced scripts
 include( CMakeInclude )
 include( Install )
