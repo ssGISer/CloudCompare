@@ -41,6 +41,13 @@ else()
 	add_executable( ${PROJECT_NAME} ${header_list} ${source_list} ${generated_ui_list} ${generated_qrc_list} ${rc_list} ${txt_list} )
 endif()
 
+DeployQt(
+	TARGET
+		${PROJECT_NAME}
+	DEPLOY_PATH
+		${PROJECT_NAME}
+)
+
 target_link_libraries( ${PROJECT_NAME}
     CCAppCommon
     QCustomPlot
@@ -84,11 +91,6 @@ install_ext( TARGETS ${PROJECT_NAME} ${CLOUDCOMPARE_DEST_FOLDER} "" )
 set( auxFiles  ${CloudCompareProjects_SOURCE_DIR}/CHANGELOG.md bin_other/license.txt bin_other/global_shift_list_template.txt )
 
 if( WIN32 )
-	# Export Qt dlls
-	install_Qt_Dlls( ${CLOUDCOMPARE_DEST_FOLDER} ${OPTION_SUPPORT_GAMEPADS} )
-	install_Qt_ImageFormats( ${CLOUDCOMPARE_DEST_FOLDER} )
-	install_Qt5_plugins( ${CLOUDCOMPARE_DEST_FOLDER} )
-
 	# Additional auxiliary file(s)
 	file( GLOB batch_list bin_other/*.bat )
 	list( APPEND auxFiles ${batch_list} )

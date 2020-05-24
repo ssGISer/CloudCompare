@@ -34,6 +34,13 @@ else()
 	add_executable( ${PROJECT_NAME} ${header_list} ${source_list} ${generated_ui_list} ${generated_qrc_list} ${rc_list})
 endif()
 
+DeployQt(
+	TARGET
+		${PROJECT_NAME}
+	DEPLOY_PATH
+		${PROJECT_NAME}
+)
+
 target_link_libraries( ${PROJECT_NAME}
     CCAppCommon
 )
@@ -75,10 +82,6 @@ install_ext( TARGETS ccViewer ${CCVIEWER_DEST_FOLDER} "" )
 set( auxFiles bin_other/license.txt )
 
 if( WIN32 )
-	# Export Qt dlls
-	install_Qt_Dlls( ${CCVIEWER_DEST_FOLDER} ${OPTION_SUPPORT_GAMEPADS} )
-	install_Qt5_plugins( ${CCVIEWER_DEST_FOLDER} )
-
 	# Additional auxiliary file(s)
 	list( APPEND auxFiles bin_other/start.bat )
 endif()

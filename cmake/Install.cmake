@@ -1,12 +1,14 @@
 # InstallSharedLibrary should be called once for each shared library in the libs directory.
-# This function installs the shared library in the correct places for each platform.
-# For macOS and Windows, it puts them with each application (CloudCompare and ccViewer).
-# For Linux, it puts it in the proper place for shared libraries so both applcations can
-# access them.
+# This function installs the shared library in the correct places for Linux.
+# For macOS and Windows, this is handled by (mac|win)deployqt.
 #
 # Arguments:
 #	TARGET The name of the library target
 function( InstallSharedLibrary )
+	if( NOT UNIX OR APPLE )
+		return()
+	endif()
+	
 	cmake_parse_arguments(
 			INSTALL_SHARED_LIB
 			""
@@ -20,19 +22,10 @@ function( InstallSharedLibrary )
 
 	message( STATUS "Install shared library: ${shared_lib_target}")
 
-	if( APPLE OR WIN32 )
-		foreach( destination ${INSTALL_DESTINATIONS} )			
-			_InstallSharedTarget(
-				TARGET ${shared_lib_target}
-				DEST_PATH ${destination}
-			)		
-		endforeach()
-	else()
-		_InstallSharedTarget(
-			TARGET ${shared_lib_target}
-			DEST_PATH ${CMAKE_INSTALL_LIBDIR}/cloudcompare
-		)
-	endif()
+	_InstallSharedTarget(
+		TARGET ${shared_lib_target}
+		DEST_PATH ${CMAKE_INSTALL_LIBDIR}/cloudcompare
+	)
 endfunction()
 
 # InstallPlugins should be called once for each application.
