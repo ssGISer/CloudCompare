@@ -8,13 +8,13 @@ get_target_property( qmake_location Qt5::qmake IMPORTED_LOCATION )
 get_filename_component( qt5_bin_dir ${qmake_location} DIRECTORY )
 
 if ( APPLE )
-	set( mac_deploy_qt "${qt5_bin_dir}/macdeployqt" )
+	find_program( mac_deploy_qt macdeployqt HINTS "${qt5_bin_dir}" )
 
 	if( NOT EXISTS "${mac_deploy_qt}" )
 		message( FATAL_ERROR "macdeployqt not found in ${qt5_bin_dir}" )
 	endif()
 elseif( WIN32 )
-	set( win_deploy_qt "${qt5_bin_dir}/windeployqt" )
+	find_program( win_deploy_qt windeployqt HINTS "${qt5_bin_dir}" )
 
 	if( NOT EXISTS "${win_deploy_qt}" )
 		message( FATAL_ERROR "windeployqt not found in ${qt5_bin_dir}" )
