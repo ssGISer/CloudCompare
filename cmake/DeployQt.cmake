@@ -44,12 +44,13 @@ function( DeployQt )
 	message( STATUS "Installing ${DEPLOY_QT_TARGET} to ${deploy_path}" )
 	
 	get_target_property( name ${DEPLOY_QT_TARGET} NAME )
-	set( app_name "${name}.app" )
-	set( app_path "${CMAKE_CURRENT_BINARY_DIR}/${app_name}" )
-	set( temp_dir "${CMAKE_CURRENT_BINARY_DIR}/deployqt" )
-	set( temp_app_path "${temp_dir}/$<CONFIG>/${app_name}" )
 		
 	if ( APPLE )
+		set( app_name "${name}.app" )
+		set( app_path "${CMAKE_CURRENT_BINARY_DIR}/${app_name}" )
+		set( temp_dir "${CMAKE_CURRENT_BINARY_DIR}/deployqt" )
+		set( temp_app_path "${temp_dir}/$<CONFIG>/${app_name}" )
+
 		add_custom_command(
 			TARGET ${DEPLOY_QT_TARGET}
 			POST_BUILD
@@ -67,6 +68,11 @@ function( DeployQt )
 			DESTINATION "${deploy_path}"
 		)
 	elseif( WIN32 )	
+		set( app_name "${name}.exe" )
+		set( app_path "${CMAKE_CURRENT_BINARY_DIR}/${app_name}" )
+		set( temp_dir "${CMAKE_CURRENT_BINARY_DIR}/deployqt" )
+		set( temp_app_path "${temp_dir}/$<CONFIG>" )
+
 		add_custom_command(
 			TARGET ${DEPLOY_QT_TARGET}
 			POST_BUILD
