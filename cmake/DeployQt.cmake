@@ -78,7 +78,7 @@ function( DeployQt )
 			POST_BUILD
 			COMMAND ${CMAKE_COMMAND} -E remove_directory "${temp_dir}"
 			COMMAND ${CMAKE_COMMAND} -E make_directory "${temp_dir}"
-			COMMAND ${CMAKE_COMMAND} -E copy_directory ${app_path} ${temp_app_path}
+			COMMAND ${CMAKE_COMMAND} -E copy ${app_path} ${temp_app_path}
 			COMMAND "${win_deploy_qt}"
 				${temp_app_path}
 				--no-angle
